@@ -95,3 +95,4 @@ Godot 4.6 stable / Metal Forward+、Blender 5.2.1 LTS、Apple M4。最終版本 
 - 32 個真實輕量客戶端收到 32 人快照，第 33 人被拒絕。未宣稱 32 人戰鬥或 GPU 壓力測試。
 - macOS Metal 畫面檢查：screenshots/compact-town.png、compact-roadside.png、compact-map.png；無引擎錯誤。
 - Windows 0.6.0 匯出、PE x86-64 檔頭及 ZIP 完整性通過；Windows 實機仍待驗證。
+- 首次上傳前，以僅含 Git 檔案的乾淨副本重新匯入。修正六個角色 GLB 的 sparse index view 相容性後，匯入零錯誤、smoke 39/39、大陸整合 78/78 通過；角色二進位資料未改動，正規化工具重跑不再產生變更。

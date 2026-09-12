@@ -13,3 +13,7 @@
 單人存檔新增 `world_layout: 2`，保留版本 4 的其他欄位。舊版遠方曦光碑以原始座標與穩定聚落 ID 對應新位置；起始區域座標保留。無法辨識或越界的位置回到起始曦光碑，不會把角色留在無地形的世界外。等級、物品、任務與已擊敗的 Boss ID 保留。
 
 多人協定改為 `aurelia-realm-5`，因敵人／採集互動索引與地圖坐標已變，舊客戶端不可混用。
+
+## 首次匯入相容性
+
+乾淨副本測試發現六個角色 GLB 的多個 sparse index accessor 共用較大的 buffer view，觸發 Godot 4.6 嚴格長度檢查。現已替各 accessor 建立獨立 view，GLB 二進位資料保持完全相同；修復工具為 `tools/fix_sparse_views.py`，也接入角色最佳化流程。依據：[Godot 4.6 匯入器原始碼](https://github.com/godotengine/godot/blob/4.6-stable/modules/gltf/structures/gltf_accessor.cpp)。
