@@ -172,6 +172,11 @@ func server() -> void:
 	game.get_tree().quit(0 if failures.is_empty() else 1)
 
 func client() -> void:
+	var language=game.get_node("/root/Language")
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--language="):
+			var expected=argument.trim_prefix("--language=")
+			check(language.locale==expected and language.render("霜矢")==("Frost Arrow" if expected=="en" else "霜矢"),"Client retains its own selected interface language")
 	var n=game.net
 	for i in 180:
 		if n.online:break

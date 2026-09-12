@@ -30,3 +30,6 @@ screenshots/*
 !screenshots/compact-map.png
 !screenshots/level-system.png
 !screenshots/magic-spellbook.png
+
+!screenshots/language-en-*.png
+!screenshots/language-zh-menu.png

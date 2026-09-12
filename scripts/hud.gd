@@ -15,6 +15,7 @@ const GOLD = Color("d8b77a")
 
 func setup(owner_game: Node3D) -> void:
 	game=owner_game
+	Localizer.current.changed.connect(_rebuild_buttons)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter=Control.MOUSE_FILTER_IGNORE
 	sans=SystemFont.new()
@@ -34,12 +35,35 @@ func _process(_delta: float) -> void:
 		_rebuild_buttons()
 	queue_redraw()
 
-func txt(text: String, p: Vector2, size: int = 18, color: Color = PAPER, font: Font = null) -> void:
-	draw_string(sans if font==null else font,p,text,HORIZONTAL_ALIGNMENT_LEFT,-1,size,color)
-
-func centered(text: String, p: Vector2, size: int = 18, color: Color = PAPER, font: Font = null) -> void:
+func txt(text: String, p: Vector2, size: int = 18, color: Color = PAPER, font: Font = null, width: float = -1, localize: bool = true) -> void:
 	var f=sans if font==null else font
-	txt(text,p-Vector2(f.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,size).x/2,0),size,color,f)
+	var value=Localizer.current.render(text) if localize else text
+	var limit=width if width>0 else 1560-p.x
+	var measured=f.get_string_size(value,HORIZONTAL_ALIGNMENT_LEFT,-1,size).x
+	var fitted=mini(size,maxi(10,floori(size*limit/maxf(1,measured))))
+	draw_string(f,p,value,HORIZONTAL_ALIGNMENT_LEFT,-1,fitted,color)
+
+func centered(text: String, p: Vector2, size: int = 18, color: Color = PAPER, font: Font = null, width: float = -1) -> void:
+	var f=sans if font==null else font
+	var value=Localizer.current.render(text)
+	var limit=width if width>0 else minf(p.x,1600-p.x)*2-40
+	var measured=f.get_string_size(value,HORIZONTAL_ALIGNMENT_LEFT,-1,size).x
+	var fitted=mini(size,maxi(10,floori(size*limit/maxf(1,measured))))
+	txt(value,p-Vector2(f.get_string_size(value,HORIZONTAL_ALIGNMENT_LEFT,-1,fitted).x/2,0),fitted,color,f,limit,false)
+
+func wrapped(text:String, width:float, size:int) -> PackedStringArray:
+	var value=Localizer.current.render(text)
+	var lines:PackedStringArray=[]
+	var line=""
+	var words=value.split(" ") if Localizer.current.locale=="en" else value.split("")
+	var separator=" " if Localizer.current.locale=="en" else ""
+	for word in words:
+		var next=word if line.is_empty() else line+separator+word
+		if not line.is_empty() and sans.get_string_size(next,HORIZONTAL_ALIGNMENT_LEFT,-1,size).x>width:
+			lines.append(line);line=word
+		else:line=next
+	if not line.is_empty():lines.append(line)
+	return lines
 
 func panel(rect: Rect2, alpha: float = 0.9) -> void:
 	draw_style_box(style(Color(INK,alpha),Color(GOLD,0.34)),rect)
@@ -86,9 +110,9 @@ func _draw() -> void:
 		txt("PEOPLE OF AURELIA",Vector2(390,215),14,GOLD)
 		txt(game.speaker,Vector2(390,266),31)
 		draw_line(Vector2(390,287),Vector2(1210,287),Color(GOLD,0.35))
-		var lines=game.dialogue_text.split("\n")
+		var lines=Localizer.current.render(game.dialogue_text).split("\n")
 		for i in lines.size():
-			txt(lines[i],Vector2(390,327+i*31),19,MUTED)
+			txt(lines[i],Vector2(390,327+i*31),19,MUTED,null,820)
 		txt("持有  %d 金幣  ·  %d 月露草" % [game.player.gold,game.player.herbs],Vector2(390,683),16,GOLD)
 	elif mode=="map":
 		_map()
@@ -98,6 +122,9 @@ func _draw() -> void:
 		_spellbook()
 	elif mode=="guide":
 		_guide()
+	elif mode=="credits":
+		draw_rect(Rect2(0,0,1600,900),Color(INK,.98))
+		txt("素材作者與授權",Vector2(100,120),36,GOLD)
 	elif mode=="pause":
 		_play()
 		draw_rect(Rect2(0,0,1600,900),Color(0.025,0.065,0.065,0.7))
@@ -118,8 +145,8 @@ func _draw() -> void:
 		centered("獲得 500 金幣 · 日冕之印     村長在晨鐘村等待你的消息。",Vector2(800,527),18,GOLD)
 	if game.toast_time>0 and mode!="menu":
 		panel(Rect2(540,103,520,84),minf(0.94,game.toast_time))
-		centered(game.toast_title,Vector2(800,134),21,GOLD)
-		centered(game.toast_body,Vector2(800,164),14,PAPER)
+		centered(game.toast_title,Vector2(800,134),21,GOLD,null,480)
+		centered(game.toast_body,Vector2(800,164),14,PAPER,null,480)
 
 func _sun(p: Vector2, radius: float, color: Color) -> void:
 	draw_arc(p,radius,0,TAU,64,color,1.5,true)
@@ -162,12 +189,12 @@ func _play() -> void:
 	draw_polygon(PackedVector2Array([Vector2(460,0),Vector2(1140,0),Vector2(1140,103),Vector2(460,103)]),PackedColorArray([Color(INK,0.48),Color(INK,0.48),Color(INK,0),Color(INK,0)]))
 	panel(Rect2(28,27,320,137),0.73)
 	_sun(Vector2(65,66),18,GOLD)
-	txt(game.net.nickname if game.net.online else "曦光旅人",Vector2(101,58),18)
-	txt("%s · LV. %02d · 長劍 +%d" % [CharacterProfile.CLASSES[p.profile.job],p.level,p.upgrades],Vector2(101,81),12,GOLD)
+	txt(game.net.nickname if game.net.online else "曦光旅人",Vector2(101,58),18,PAPER,null,220,not game.net.online)
+	txt("%s · LV. %02d · 長劍 +%d" % [CharacterProfile.CLASSES[p.profile.job],p.level,p.upgrades],Vector2(101,81),12,GOLD,null,237)
 	_bar(Vector2(49,97),277,p.hp,p.max_hp,Color("c57665"),11)
 	_bar(Vector2(49,114),134,p.mana,p.max_mana,Color("79b7c4"),7)
 	_bar(Vector2(192,114),134,p.stamina,100,Color("b2c681"),7)
-	txt("%d / %d" % [p.hp,p.max_hp],Vector2(262,88),12,MUTED)
+	txt("%d / %d" % [p.hp,p.max_hp],Vector2(262,93),11,MUTED)
 	var needed=Progression.required(p.level)
 	_bar(Vector2(49,136),277,p.experience if needed>0 else 1,needed if needed>0 else 1,Color("8dd6bc"),5)
 	txt("等級已滿 · Lv.50" if needed==0 else "%d / %d EXP"%[p.experience,needed],Vector2(49,156),11,MUTED)
@@ -200,9 +227,9 @@ func _play() -> void:
 	else:
 		panel(Rect2(23,184,352,129 if game.quest_active else 105),0.65)
 		txt("當前旅途",Vector2(34,206),13,GOLD)
-		txt("日冕下的古老誓約",Vector2(34,239),22)
+		txt("日冕下的古老誓約",Vector2(34,239),22,PAPER,null,330)
 		var objective="與村長伊蓮交談" if not game.quest_active else ("返回晨鐘村，告知村長" if game.boss_defeated else "穿過曦白城，挑戰天穹古龍")
-		txt("◇  "+objective,Vector2(34,270),15,MUTED)
+		txt("◇  "+objective,Vector2(34,270),15,MUTED,null,330)
 		if game.quest_active:
 			txt("清除野外威脅  %d / 3" % mini(3,game.kills),Vector2(53,298),14,MUTED)
 	# Skills, cooldown numbers, and resources stay visible during combat.
@@ -219,17 +246,17 @@ func _play() -> void:
 			draw_rect(Rect2(x+2,804,96,75*remaining/spell.cd),Color(0.01,0.03,0.07,0.65))
 		txt(str(i+1),Vector2(x+10,824),14,color)
 		_spell_icon(index,Vector2(x+68,822),11,color if remaining<=0 else MUTED)
-		centered(spell.name,Vector2(x+50,848),15,PAPER if remaining<=0 else MUTED)
+		centered(spell.name,Vector2(x+50,848),15,PAPER if remaining<=0 else MUTED,null,92)
 		centered("%.1fs" % remaining if remaining>0 else "%d MP" % spell.cost,Vector2(x+50,871),12,Color("db8a77") if p.mana<spell.cost else MUTED)
 	panel(Rect2(952,801,88,80),0.92)
 	txt("R",Vector2(963,824),14,GOLD)
-	centered("聖露瓶",Vector2(996,848),15,PAPER)
+	centered("聖露瓶",Vector2(996,848),15,PAPER,null,80)
 	centered(str(p.flasks)+" 瓶",Vector2(996,871),12,MUTED)
 	if p.ward_time>0 and p.ward_hp>0:
 		txt("星紗護壁  %d  ·  %.1fs" % [p.ward_hp,p.ward_time],Vector2(33,195 if p.food_time>0 else 174),14,Color("84ddff"))
-	txt("左鍵  輕攻擊    右鍵  重攻擊",Vector2(31,813),15,PAPER)
-	txt("Space  翻滾    Shift  奔跑    Q  鎖定",Vector2(31,841),14,MUTED)
-	txt("H  "+("下馬" if p.mounted else "呼喚／騎馬")+"     E  互動     Esc  "+("選單" if game.net.online else "暫停"),Vector2(31,868),14,MUTED)
+	txt("左鍵  輕攻擊    右鍵  重攻擊",Vector2(31,813),15,PAPER,null,430)
+	txt("Space  翻滾    Shift  奔跑    Q  鎖定",Vector2(31,841),14,MUTED,null,430)
+	txt("H  "+("下馬" if p.mounted else "呼喚／騎馬")+"     E  互動     Esc  "+("選單" if game.net.online else "暫停"),Vector2(31,868),14,MUTED,null,430)
 	if p.food_time>0:
 		txt("暖心燉湯  ·  體力恢復提升 %ds" % p.food_time,Vector2(33,174),14,GOLD)
 	if game.interact_hint!="":
@@ -292,11 +319,8 @@ func _spellbook() -> void:
 			_spell_icon(index,Vector2(x+29,y+29),13,color)
 			txt("%d  %s" % [slot+1,s.name],Vector2(x+55,y+35),22,color)
 			txt("%d MP  ·  %.1fs 冷卻" % [s.cost,s.cd],Vector2(x+18,y+64),14,GOLD)
-			var description:String=s.desc
-			if description.length()>23:
-				txt(description.left(23),Vector2(x+18,y+88),16,MUTED)
-				txt(description.substr(23),Vector2(x+18,y+109),16,MUTED)
-			else:txt(description,Vector2(x+18,y+94),16,MUTED)
+			var lines=wrapped(s.desc,408,16)
+			for line in mini(lines.size(),2):txt(lines[line],Vector2(x+18,y+88+line*21),16,MUTED,null,408)
 	txt("範圍法術會瞄準鎖定敵人或前方地面；大型術式有前搖，敵人可在期間攻擊。",Vector2(100,841),17,GOLD)
 
 func _map_point(v: Vector3) -> Vector2:
@@ -366,21 +390,21 @@ func _journal() -> void:
 	txt("01   日冕下的古老誓約",Vector2(185,264),26,GOLD)
 	var lines=["昔日的王城守護者仍守在日冕聖域。","日輪失序使祂無法辨認故友，只記得尚未完成的誓言。","村長請你解除古龍的束縛，讓商旅重返曦白城。","","◇ 與晨鐘村的村長伊蓮交談    "+("完成" if game.quest_active else "未完成"),"◇ 清除原野威脅    %d / 3" % mini(3,game.kills),"◇ 擊敗天穹古龍    "+("完成" if game.boss_defeated else "未完成"),"◇ 回報村長    "+("完成" if game.quest_rewarded else "未完成"),"","報酬：180 金幣與 3 株月露草"]
 	for i in lines.size():
-		txt(lines[i],Vector2(185,308+i*34),17,MUTED)
+		txt(lines[i],Vector2(185,308+i*34),17,MUTED,null,535)
 	txt("古龍觀察錄",Vector2(830,261),28)
 	var tips=["迅翼二連  /  短前搖，接第二刀後再反擊。","遲暮龍爪  /  抬爪後會停頓，不要太早翻滾。","日蝕掃尾  /  快刀之後，還有一記延遲追擊。","天穹落印  /  離開金色圓圈，避免連續爆炸。","日輪震波  /  翻滾穿過擴散的光環。","星焰甦醒  /  生命 66% 甦醒星焰，30% 喚出天穹審判。","","重擊與日輪斬可累積架勢傷害。","古龍失衡時有較長的進攻窗口。","離開聖域過遠，Boss 將恢復力量。"]
 	for i in tips.size():
-		txt(tips[i],Vector2(830,310+i*36),18,MUTED)
+		txt(tips[i],Vector2(830,310+i*36),18,MUTED,null,620)
 
 	txt("旅人 Lv.%d  ·  生命 %d  ·  魔力 %d  ·  等級傷害加成 +%.1f%%"%[game.player.level,game.player.max_hp,game.player.max_mana,(game.player.damage_multiplier()-1)*100],Vector2(150,817),18,GOLD)
 
 func button(text: String, rect: Rect2, action: Callable, primary: bool = false) -> void:
 	var b=Button.new()
-	b.text=text
+	b.text=Localizer.current.render(text)
 	b.position=rect.position
 	b.size=rect.size
 	b.add_theme_font_override("font",sans)
-	b.add_theme_font_size_override("font_size",19)
+	b.add_theme_font_size_override("font_size",mini(19,maxi(12,int(19*(rect.size.x-35)/maxf(1,sans.get_string_size(b.text,HORIZONTAL_ALIGNMENT_LEFT,-1,19).x)))))
 	b.add_theme_color_override("font_color",INK if primary else PAPER)
 	b.add_theme_color_override("font_hover_color",INK)
 	b.add_theme_stylebox_override("normal",style(GOLD if primary else Color(INK,0.8),GOLD))
@@ -411,7 +435,7 @@ func _rebuild_buttons() -> void:
 				var labels:Array=["男","女"] if i==0 else CharacterProfile.CLASSES if i==1 else []
 				if i>1:
 					for spell in Spellcraft.SPELLS:labels.append(spell.name)
-				for label in labels:option.add_item(label)
+				for label in labels:option.add_item(Localizer.current.render(label))
 				option.select(game.player.profile.gender if i==0 else game.player.profile.job if i==1 else game.player.profile.skills[i-2])
 				selectors.append(option)
 			button("確認角色，開始冒險",Rect2(590,740,420,60),func():
@@ -420,7 +444,7 @@ func _rebuild_buttons() -> void:
 				var unique={}
 				for skill in skills:unique[skill]=true
 				if unique.size()!=4:
-					selectors[5].tooltip_text="請選擇四種不同術式。"
+					selectors[5].tooltip_text=Localizer.current.render("請選擇四種不同術式。")
 					selectors[5].grab_focus()
 					game.toast("技能不可重複","請選擇四種不同術式。")
 					return
@@ -474,10 +498,35 @@ func _rebuild_buttons() -> void:
 		destination.size=Vector2(450,43)
 		destination.add_theme_font_override("font",sans)
 		destination.add_theme_font_size_override("font_size",18)
-		destination.add_item("晨鐘村 · 起始領地")
-		for site in WorldAtlas.settlements:destination.add_item(site.name+" · "+site.region)
+		destination.add_item(Localizer.current.render("晨鐘村 · 起始領地"))
+		for site in WorldAtlas.settlements:destination.add_item(Localizer.current.render(site.name+" · "+site.region))
 		button("驛站旅行",Rect2(1080,798,190,43),func():
 			if game.net.online:
 				game.net.request("travel",destination.selected)
 				game.set_mode("play")
 			else:game.travel_to(destination.selected))
+
+	if game.mode in ["menu","pause"]:
+		var language=OptionButton.new()
+		controls.add_child(language)
+		language.name="LanguageSelector"
+		language.position=Vector2(1240,55) if game.mode=="menu" else Vector2(625,612)
+		language.size=Vector2(280,45) if game.mode=="menu" else Vector2(350,45)
+		language.add_theme_font_override("font",sans)
+		language.add_theme_font_size_override("font_size",18)
+		language.add_item("語言 · 繁體中文")
+		language.add_item("Language · English")
+		language.select(1 if Localizer.current.locale=="en" else 0)
+		language.item_selected.connect(func(index):Localizer.current.set_language("en" if index==1 else "zh_TW"))
+	if game.mode=="menu":
+		button("素材作者與授權",Rect2(1240,115,280,43),func():game.set_mode("credits"))
+	if game.mode=="credits":
+		var credits=RichTextLabel.new()
+		controls.add_child(credits)
+		credits.position=Vector2(100,175)
+		credits.size=Vector2(1400,590)
+		credits.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+		credits.add_theme_font_override("normal_font",sans)
+		credits.add_theme_font_size_override("normal_font_size",19)
+		credits.text=FileAccess.get_file_as_string("res://THIRD_PARTY_NOTICES.md")
+		button("返回",Rect2(1240,60,260,49),func():game.set_mode("menu"))

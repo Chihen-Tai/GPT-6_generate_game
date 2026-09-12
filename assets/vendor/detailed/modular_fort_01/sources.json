@@ -62,5 +62,8 @@
       "sha256": "5f5b44b6e5122e9430378f07ef9369ddc1186e45a7709992e431e256741ca7ca",
       "bytes": 3449190
     }
-  ]
+  ],
+  "authors": {
+    "Rico Cilliers": "All"
+  }
 }

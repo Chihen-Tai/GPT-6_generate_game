@@ -200,7 +200,7 @@ func _add_actor(id: int, display_name: String, local: bool) -> Hero:
 		actor.mount_visual=Art.horse(actor)
 		actor.mount_visual.top_level=true
 		actor.mount_visual.hide()
-	var label=Art.label3d(actor,display_name,Vector3(0,2.25,0),Color("a9e9ff"),22)
+	var label=Art.label3d(actor,display_name,Vector3(0,2.25,0),Color("a9e9ff"),22,false)
 	label.visibility_range_end=28
 	actor.set_meta("nameplate",label)
 	avatars[id]=actor

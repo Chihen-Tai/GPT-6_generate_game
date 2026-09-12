@@ -118,7 +118,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if mode=="play":
 			set_mode("pause")
-		elif mode=="character":
+		elif mode in ["character","credits"]:
 			set_mode("menu")
 		elif mode=="guide":
 			set_mode(guide_return)

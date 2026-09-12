@@ -324,9 +324,10 @@ static func horse(parent: Node3D) -> Node3D:
 	mount.name="HorseRig"
 	return mount
 
-static func label3d(parent: Node3D, text: String, pos: Vector3, color: Color = IVORY, size: int = 36) -> Label3D:
+static func label3d(parent: Node3D, text: String, pos: Vector3, color: Color = IVORY, size: int = 36, localize: bool = true) -> Label3D:
 	var l = Label3D.new()
 	l.text = text
+	if localize:Localizer.current.bind_label(l,text)
 	l.position = pos
 	l.font_size = size
 	l.pixel_size = 0.009

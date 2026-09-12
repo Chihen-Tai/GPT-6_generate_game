@@ -6,8 +6,10 @@ ROOT=Path(__file__).resolve().parents[1]
 GODOT=Path(os.environ.get('GODOT') or shutil.which('godot') or ROOT/'tools/Godot.app/Contents/MacOS/Godot')
 PORT='24671'
 parser=argparse.ArgumentParser()
+parser.add_argument('--languages',action='store_true',help='Verify English and Chinese clients in one world')
 parser.add_argument('--pack',type=Path,help='Verify an exported PCK instead of the source project')
-pack=parser.parse_args().pack
+options=parser.parse_args()
+pack=options.pack
 pack_args=['--main-pack',str(pack.resolve())] if pack else []
 processes=[]
 files=[]
@@ -21,8 +23,8 @@ try:
  while 'REALM_READY' not in log.read_text():
   if server.poll() is not None or time.monotonic()>deadline:raise RuntimeError('server did not start')
   time.sleep(.2)
- launch('alpha',['--join=127.0.0.1','--name=Alpha'])
- launch('beta',['--join=127.0.0.1','--name=Beta'])
+ launch('alpha',['--join=127.0.0.1','--name=Alpha']+(['--language=en'] if options.languages else []))
+ launch('beta',['--join=127.0.0.1','--name=Beta']+(['--language=zh_TW'] if options.languages else []))
  late=False
  while server.poll() is None:
   if not late and 'NET_WAIT_LATE' in log.read_text():

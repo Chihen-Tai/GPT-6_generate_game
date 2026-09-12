@@ -96,3 +96,13 @@ Godot 4.6 stable / Metal Forward+、Blender 5.2.1 LTS、Apple M4。最終版本 
 - macOS Metal 畫面檢查：screenshots/compact-town.png、compact-roadside.png、compact-map.png；無引擎錯誤。
 - Windows 0.6.0 匯出、PE x86-64 檔頭及 ZIP 完整性通過；Windows 實機仍待驗證。
 - 首次上傳前，以僅含 Git 檔案的乾淨副本重新匯入。修正六個角色 GLB 的 sparse index view 相容性後，匯入零錯誤、smoke 39/39、大陸整合 78/78 通過；角色二進位資料未改動，正規化工具重跑不再產生變更。
+
+## 2026-09-13 · 0.7.0 中英文與素材授權
+
+- 英文詞庫 397 筆，涵蓋 421 處程式來源文字；printf 參數、順序與格式一致。
+- 語言專項驗證：來源專案與 Windows PCK 各 999/999，包含格式化數字、合成地名、現有頭頂標籤即時切換、玩家姓名保留、選單實際切換、設定存讀、授權畫面與包內法律文件。
+- 遊戲回歸：smoke 39/39、等級 25/25、魔法 49/49、大陸 78/78。
+- 中英文真實 ENet 客戶端同服：來源與 Windows PCK 各 57/57；語言不變更角色狀態或網路協定。
+- 原生 Metal 畫面檢查：中英文主選單，以及英文角色建立、遊戲、魔法書、手記、地圖、暫停、對話和授權畫面。
+- 授權檢查涵蓋 11 個素材包、角色與動畫原始聲明、Adobe／Noto 字型版權及 OFL、Godot 引擎與相依套件聲明。Windows 包內 27 份授權／來源文件與來源逐位元組一致。
+- Windows ZIP 與 PE x86-64 完整性通過；尚未完成 Windows 實機顯示卡驗證。

@@ -1,2 +1,3 @@
 # Preserve upstream asset files, including original license formatting.
 assets/vendor/** -whitespace
+licenses/** -whitespace

@@ -1,0 +1,7 @@
+Noto Sans CJK TC Regular
+Copyright notice embedded in the distributed OTF name table (nameID 0):
+© 2014-2021 Adobe (http://www.adobe.com/).
+
+Original font source: https://github.com/notofonts/noto-cjk/tree/main/Sans
+License: SIL Open Font License 1.1. See Noto-OFL.txt.
+The font is distributed unmodified; the game only loads it as a fallback font.
