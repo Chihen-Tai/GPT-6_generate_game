@@ -1,0 +1,37 @@
+[
+  {
+    "name": "vroid_male",
+    "url": "https://opengameart.org/sites/default/files/hairsample_male.zip",
+    "sha256": "ba87440272b157a443dbe2cddb375eb175bce3586a45a84779bb018a5e730129"
+  },
+  {
+    "name": "vroid_vivi",
+    "url": "https://opengameart.org/sites/default/files/avatarsample_e.zip",
+    "sha256": "3b6808e241102221625380d3e5d6911efb5cd484f290bfa16955e1b65856b6b1"
+  },
+  {
+    "name": "vroid_blonde",
+    "url": "https://opengameart.org/sites/default/files/avatarsample_g.zip",
+    "sha256": "3dc643aa55bf565512aa445775943b3ee93c71dc157b8ea8394863d494811b34"
+  },
+  {
+    "name": "animations",
+    "url": "https://opengameart.org/sites/default/files/universal_animation_librarystandard.zip",
+    "sha256": "18ff1a7215f4852b320203e8aaf02a1578b5c8eef9027fbaedfcedc7b85a3ac2"
+  },
+  {
+    "name": "animations2",
+    "url": "https://opengameart.org/sites/default/files/universal_animation_library_2standard.zip",
+    "sha256": "ec0e40d6d78fe9aaad59e322f40865a8675c22f0745e291622e54520391a9217"
+  },
+  {
+    "name": "anime_mage",
+    "url": "https://dawn-to-dusk-games.itch.io/3d-anime-female-mage-character",
+    "sha256": "041b2543ff1ea233b35325aa7a214a1b76603587f4d66d6a71062a981e457d50"
+  },
+  {
+    "name": "outfits",
+    "url": "https://quaternius.itch.io/modular-character-outfits-fantasy",
+    "sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70"
+  }
+]

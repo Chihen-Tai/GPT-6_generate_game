@@ -1,0 +1,49 @@
+[
+  {
+    "name": "character-pack-adventures",
+    "source": "https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0",
+    "license": "CC0-1.0",
+    "models": 32
+  },
+  {
+    "name": "character-pack-skeletons",
+    "source": "https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Skeletons-1.0",
+    "license": "CC0-1.0",
+    "models": 17
+  },
+  {
+    "name": "dungeon-remastered",
+    "source": "https://github.com/KayKit-Game-Assets/KayKit-Dungeon-Remastered-1.0",
+    "license": "CC0-1.0",
+    "models": 203
+  },
+  {
+    "name": "medieval-hexagon-pack",
+    "source": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0",
+    "license": "CC0-1.0",
+    "models": 221
+  },
+  {
+    "name": "particles",
+    "source": "https://kenney.nl/assets/particle-pack",
+    "license": "CC0-1.0"
+  },
+  {
+    "name": "quaternius-monsters",
+    "source": "https://opengameart.org/content/lowpoly-animated-monsters",
+    "license": "CC0-1.0"
+  },
+  {
+    "name": "quaternius-animals",
+    "source": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+    "license": "CC0-1.0",
+    "models": 7
+  },
+  {
+    "name": "grass-path-2",
+    "source": "https://polyhaven.com/a/grass_path_2",
+    "author": "Rob Tuytel / Poly Haven",
+    "license": "CC0-1.0",
+    "files": 2
+  }
+]

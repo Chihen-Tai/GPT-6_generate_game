@@ -1,0 +1,93 @@
+{
+  "Cow": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  },
+  "Horse": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  },
+  "Llama": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  },
+  "Pig": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  },
+  "Pug": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  },
+  "Sheep": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  },
+  "Zebra": {
+    "actions": [
+      "Death",
+      "Idle",
+      "Jump",
+      "Run",
+      "Walk",
+      "WalkSlow"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  }
+}

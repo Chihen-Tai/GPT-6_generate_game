@@ -1,0 +1,51 @@
+{
+  "Bat": {
+    "actions": [
+      "Bat_Attack",
+      "Bat_Attack2",
+      "Bat_Death",
+      "Bat_Flying",
+      "Bat_Hit"
+    ],
+    "objects": [
+      "BatArmature",
+      "EyeArmature"
+    ]
+  },
+  "Dragon": {
+    "actions": [
+      "Dragon_Attack",
+      "Dragon_Attack2",
+      "Dragon_Death",
+      "Dragon_Flying",
+      "Dragon_Hit"
+    ],
+    "objects": [
+      "DragonArmature",
+      "EyeArmature"
+    ]
+  },
+  "Skeleton": {
+    "actions": [
+      "Skeleton_Attack",
+      "Skeleton_Death",
+      "Skeleton_Idle",
+      "Skeleton_Running",
+      "Skeleton_Spawn"
+    ],
+    "objects": [
+      "SkeletonArmature"
+    ]
+  },
+  "Slime": {
+    "actions": [
+      "Slime_Attack",
+      "Slime_Death",
+      "Slime_Idle",
+      "Slime_Walk"
+    ],
+    "objects": [
+      "Armature"
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+[
+  {
+    "asset": "dawn_sword",
+    "vertices": 3954,
+    "triangles": 7736,
+    "meshes": 6
+  },
+  {
+    "asset": "cottage",
+    "vertices": 50934,
+    "triangles": 97272,
+    "meshes": 34
+  },
+  {
+    "asset": "market_stall",
+    "vertices": 16540,
+    "triangles": 31454,
+    "meshes": 9
+  },
+  {
+    "asset": "castle_tower",
+    "vertices": 83706,
+    "triangles": 161928,
+    "meshes": 22
+  },
+  {
+    "asset": "castle_gate",
+    "vertices": 38772,
+    "triangles": 74156,
+    "meshes": 8
+  },
+  {
+    "asset": "horse",
+    "vertices": 39791,
+    "triangles": 78192,
+    "meshes": 23
+  },
+  {
+    "asset": "golden_oak",
+    "vertices": 20076,
+    "triangles": 22480,
+    "meshes": 4
+  },
+  {
+    "asset": "blossom_tree",
+    "vertices": 20076,
+    "triangles": 22480,
+    "meshes": 4
+  },
+  {
+    "asset": "pine_tree",
+    "vertices": 17562,
+    "triangles": 15700,
+    "meshes": 2
+  },
+  {
+    "asset": "weathered_rock",
+    "vertices": 378,
+    "triangles": 752,
+    "meshes": 1
+  },
+  {
+    "asset": "mountain",
+    "vertices": 832,
+    "triangles": 1536,
+    "meshes": 1
+  },
+  {
+    "asset": "traveler",
+    "vertices": 30312,
+    "triangles": 59038,
+    "meshes": 52
+  },
+  {
+    "asset": "villager",
+    "vertices": 24294,
+    "triangles": 47298,
+    "meshes": 44
+  },
+  {
+    "asset": "sunwarden",
+    "vertices": 31418,
+    "triangles": 61114,
+    "meshes": 50
+  },
+  {
+    "asset": "field_enemy",
+    "vertices": 30312,
+    "triangles": 59038,
+    "meshes": 39
+  },
+  {
+    "asset": "sunwell_fountain",
+    "vertices": 5958,
+    "triangles": 10712,
+    "meshes": 4
+  },
+  {
+    "asset": "sanctuary_column",
+    "vertices": 4866,
+    "triangles": 9108,
+    "meshes": 2
+  },
+  {
+    "asset": "sunshield",
+    "vertices": 2642,
+    "triangles": 4992,
+    "meshes": 3
+  },
+  {
+    "asset": "grass_tuft",
+    "vertices": 96,
+    "triangles": 72,
+    "meshes": 1
+  }
+]

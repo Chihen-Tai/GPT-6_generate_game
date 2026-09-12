@@ -1,0 +1,32 @@
+.godot/
+.DS_Store
+tools/Godot.app/
+builds/
+*.log
+*.blend1
+tools/npm-cache/
+tools/export_templates/
+
+# Generated authoring files, downloaded archives and local diagnostics.
+art/*
+!art/*.py
+!art/*.md
+!art/vendor/
+art/vendor/*
+!art/vendor/LICENSES.md
+!art/vendor/downloads.json
+__pycache__/
+*.pyc
+*.tmp
+*.zip
+*.tar.gz
+.env
+.env.*
+!.env.example
+# Keep a small, current gallery in the source repository.
+screenshots/*
+!screenshots/compact-town.png
+!screenshots/compact-roadside.png
+!screenshots/compact-map.png
+!screenshots/level-system.png
+!screenshots/magic-spellbook.png
